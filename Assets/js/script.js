@@ -110,14 +110,14 @@ var myQuestions = [
 	},
 
     {
-		question: "How to write a comment in javaScript?",
+		question: "Which of the following keywords is used to define a variable in Javascript?",
 		answers: {
-			a: '/* */',
-			b: '//',
-			c: '#',
-            d: '$$'
+			a: 'var',
+			b: 'let',
+			c: 'Both a and b',
+            d: 'None of the above'
 		},
-		correctAnswer: 'b'
+		correctAnswer: 'c'
 	},
 
 ]
@@ -157,15 +157,20 @@ function renderQuestions() {
         answer3El.textContent = myQuestions[question].answers.c;
         answer4El.textContent = myQuestions[question].answers.d;
 
-        var userAnswer = document.querySelector("input[name=questions]:checked").value;
-        
-        if (myQuestions.correctAnswer === userAnswer) {
-            submitEl.addEventListener('click', function(){
-                question++;
-                renderQuestions();
-            })
-           
-        
-    }
+        submitEl.addEventListener('click', function(e){
+            e.preventDefault();
+            var userAnswer = document.querySelector("input[name=questions]:checked").value;
+            console.log(userAnswer);
+            console.log(myQuestions[question].correctAnswer);
+            if (myQuestions[question].correctAnswer == userAnswer) {
+                console.log("inside if condition")
+                    question++;
+                    renderQuestions();
+                }
+            else {
+                return;
+            }
+                
+        })
         
 }
