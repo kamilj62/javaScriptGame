@@ -1,11 +1,13 @@
 var questionEl = document.querySelector('.question');
-var answer1El = document.querySelector('#answer1');
-var answer2El = document.querySelector('#answer2');
-var answer3El = document.querySelector('#answer3');
-var answer4El = document.querySelector('#answer4');
+var answer1El = document.querySelector('#answer1-label');
+var answer2El = document.querySelector('#answer2-label');
+var answer3El = document.querySelector('#answer3-label');
+var answer4El = document.querySelector('#answer4-label');
 var submitEl = document.querySelector('#submit');
 
 var timeEl = document.querySelector('.time');
+
+var question = 2;
 
 var myQuestions = [
     {
@@ -23,7 +25,7 @@ var myQuestions = [
 		question: "Which of the following keyword(s) is used to define a variable in javaScript?",
 		answers: {
 			a: 'var',
-			b: 'getE',
+			b: 'let',
 			c: 'const',
             d: 'All of the above'
 		},
@@ -128,7 +130,7 @@ function startGame() {
 }
 
 // Attach an event listener to the start button to call the 'startGame' function on click
-submitEl.addEventListener("click", startGame());
+timeEl.addEventListener("click", startGame());
 
 function setTime() {
     // Sets interval in variable
@@ -148,6 +150,16 @@ function setTime() {
 
 
 function renderQuestions() {
-    questionEl.textContent = myQuestions[0].question;
-    answer1El.textContent = myQuestions[0].answers.a;
+    
+        questionEl.textContent = myQuestions[question].question;
+        answer1El.textContent = myQuestions[question].answers.a;
+        answer2El.textContent = myQuestions[question].answers.b;
+        answer3El.textContent = myQuestions[question].answers.c;
+        answer4El.textContent = myQuestions[question].answers.d;
+        
+        if (myQuestions.correctAnswer === 'checked') {
+            question++;
+        
+    }
+        
 }
