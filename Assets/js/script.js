@@ -138,10 +138,15 @@ function setTime() {
       timer--;
       timeEl.textContent = timer;
   
-      if(timer === 0) {
+      if(timer !== 0 && question === 9) {
         // Stops execution of action at set interval
-        clearInterval(timerInterval);
-        // Calls function to create and append image
+            clearInterval(timerInterval);
+        // Calls winGame function
+            winGame();
+      }
+      else if (timer === 0) {
+          clearInterval(timerInterval);
+          loseGame();
       }
   
     }, 1000);
@@ -151,26 +156,39 @@ function setTime() {
 
 function renderQuestions() {
 
-        questionEl.textContent = myQuestions[question].question;
-        answer1El.textContent = myQuestions[question].answers.a;
-        answer2El.textContent = myQuestions[question].answers.b;
-        answer3El.textContent = myQuestions[question].answers.c;
-        answer4El.textContent = myQuestions[question].answers.d;
+    // put question and answers on to the page
+    questionEl.textContent = myQuestions[question].question;
+    answer1El.textContent = myQuestions[question].answers.a;
+    answer2El.textContent = myQuestions[question].answers.b;
+    answer3El.textContent = myQuestions[question].answers.c;
+    answer4El.textContent = myQuestions[question].answers.d;
 
-        submitEl.addEventListener('click', function(e){
-            e.preventDefault();
-            var userAnswer = document.querySelector("input[name=questions]:checked").value;
-            console.log(userAnswer);
-            console.log(myQuestions[question].correctAnswer);
-            if (myQuestions[question].correctAnswer == userAnswer) {
-                console.log("inside if condition")
-                    question++;
-                    renderQuestions();
-                }
-            else {
-                return;
-            }
+    // added event listener with prevent Default that cycles through questions when the right answer is clicked
+    submitEl.addEventListener('click', function(e){
+        e.preventDefault();
+        // check to see if checked is the same as the right answer
+        var userAnswer = document.querySelector("input[name=questions]:checked").value;
+        console.log(userAnswer);
+        console.log(myQuestions[question].correctAnswer);
+        // last question stop
+        if (question >= 9) {
+            return;
+        }
+
+        // if correct go to the next question
+        if (myQuestions[question].correctAnswer == userAnswer) {
+            console.log("inside if condition")
+                question++;
+                renderQuestions();
+        }
                 
-        })
-        
+    })
+}
+
+function winGame() {
+
+}
+
+function loseGame() {
+
 }
