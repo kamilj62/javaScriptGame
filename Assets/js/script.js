@@ -1,3 +1,36 @@
+var questionEl = document.querySelector('.question');
+var answer1El = document.querySelector('#answer1');
+var answer2El = document.querySelector('#answer2');
+var answer3El = document.querySelector('#answer3');
+var answer4El = document.querySelector('#answer4');
+var submitEl = document.querySelector('#submit');
+
+var timeEl = document.querySelector('.time');
+
+// The startGame function is called when the sumbit button is clicked
+function startGame() {
+	timer = 60;
+	setTimer();
+}
+
+// Attach an event listener to the start button to call the 'startGame' function on click
+submitEl.addEventListener("click", startGame);
+
+function setTime() {
+    // Sets interval in variable
+    var timerInterval = setInterval(function() {
+      timer--;
+      timeEl.textContent = timer;
+  
+      if(secondsLeft === 0) {
+        // Stops execution of action at set interval
+        clearInterval(timerInterval);
+        // Calls function to create and append image
+      }
+  
+    }, 1000);
+  }
+
 var myQuestions = [
     {
 		question: "JavaScript is a _______ oriented language.",
@@ -112,3 +145,4 @@ var myQuestions = [
     
 
 ]
+
