@@ -148,7 +148,6 @@ function setTime() {
 
 
 function renderQuestions() {
-    myQuestions.map(function(items) {
-        questionEl.textContent = question[items];
-    })
+    questionEl.textContent = myQuestions[0].question;
+    answer1El.textContent = myQuestions[0].answers.a;
 }
