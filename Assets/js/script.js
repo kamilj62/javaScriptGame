@@ -7,7 +7,7 @@ var submitEl = document.querySelector('#submit');
 
 var timeEl = document.querySelector('.time');
 
-var question = 2;
+var question = 0;
 
 var myQuestions = [
     {
@@ -130,7 +130,7 @@ function startGame() {
 }
 
 // Attach an event listener to the start button to call the 'startGame' function on click
-timeEl.addEventListener("click", startGame());
+timeEl.addEventListener('click', startGame());
 
 function setTime() {
     // Sets interval in variable
@@ -150,15 +150,21 @@ function setTime() {
 
 
 function renderQuestions() {
-    
+
         questionEl.textContent = myQuestions[question].question;
         answer1El.textContent = myQuestions[question].answers.a;
         answer2El.textContent = myQuestions[question].answers.b;
         answer3El.textContent = myQuestions[question].answers.c;
         answer4El.textContent = myQuestions[question].answers.d;
+
+        var userAnswer = document.querySelector("input[name=questions]:checked").value;
         
-        if (myQuestions.correctAnswer === 'checked') {
-            question++;
+        if (myQuestions.correctAnswer === userAnswer) {
+            submitEl.addEventListener('click', function(){
+                question++;
+                renderQuestions();
+            })
+           
         
     }
         
