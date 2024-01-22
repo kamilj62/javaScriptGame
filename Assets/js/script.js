@@ -1,3 +1,5 @@
+var startButtonEl =  document.querySelector('#startButton');
+
 var questionEl = document.querySelector('.question');
 var answer1El = document.querySelector('#answer1-label');
 var answer2El = document.querySelector('#answer2-label');
@@ -7,7 +9,23 @@ var submitEl = document.querySelector('#submit');
 
 var timeEl = document.querySelector('.time');
 
+var startGameEl =  document.querySelector('.startScreen');
+var quizEl =  document.querySelector('.game');
+
+var endGameEl = document.querySelector('.endGame');
+var finalScoreEL = document.querySelector('#finalScore');
+var initialsEl = document.querySelector('#initials');
+var endButtonEl = document.querySelector('#endButton');
+
+var resultEl = document.querySelector('#result');
+
+var highScoreEl = document.querySelector('.highScore');
+
+var scoreEl = document.querySelector('#score');
+
 var question = 0;
+
+var timer;
 
 var myQuestions = [
     {
@@ -120,17 +138,30 @@ var myQuestions = [
 		correctAnswer: 'c'
 	},
 
-]
+    {
+		question: "",
+		answers: {
+			a: '',
+			b: '',
+			c: '',
+            d: ''
+		},
+		correctAnswer: ''
+	}
+
+];
 
 // The startGame function is called when the sumbit button is clicked
 function startGame() {
-	timer = 60;
+	timer = 120;
 	setTime();
     renderQuestions();
+    startGameEl.classList.toggle('hidden');
+    quizEl.classList.toggle('hidden');
 }
 
 // Attach an event listener to the start button to call the 'startGame' function on click
-timeEl.addEventListener('click', startGame());
+startButtonEl.addEventListener('click', startGame);
 
 function setTime() {
     // Sets interval in variable
@@ -138,13 +169,13 @@ function setTime() {
       timer--;
       timeEl.textContent = timer;
   
-      if(timer !== 0 && question === 9) {
+      if(timer >= 0 && question > 9) {
         // Stops execution of action at set interval
             clearInterval(timerInterval);
         // Calls winGame function
             winGame();
       }
-      else if (timer === 0) {
+      else if (timer <= 0) {
           clearInterval(timerInterval);
           loseGame();
       }
@@ -169,26 +200,76 @@ function renderQuestions() {
         // check to see if checked is the same as the right answer
         var userAnswer = document.querySelector("input[name=questions]:checked").value;
         console.log(userAnswer);
-        console.log(myQuestions[question].correctAnswer);
+        
         // last question stop
-        if (question >= 9) {
+        if (question > 9) {
             return;
         }
 
         // if correct go to the next question
-        if (myQuestions[question].correctAnswer == userAnswer) {
-            console.log("inside if condition")
+        if (myQuestions[question].correctAnswer === userAnswer) {
                 question++;
                 renderQuestions();
+                userAnswer= '';
+                
         }
+
+        // minus 10 seconds to the timer if question is wrong
+        // else if (myQuestions[question].correctAnswer !== userAnswer) {
+        //     timer = timer - 10;
+        //     userAnswer = '';
+        //     console.log(timer);
+
+        // }
                 
     })
 }
 
 function winGame() {
 
+    quizEl.classList.toggle('hidden');
+    endGameEl.classList.toggle('hidden');
+
+    resultEl.textContent = "you win";
+
+    finalScoreEL.textContent = timer;
+
+    
+
+    endButtonEl.addEventListener("click", function(event) {
+        event.preventDefault();
+        
+        var score = {
+          score: timer,
+          initials: initialsEl.value,
+          
+        };
+        
+        localStorage.setItem("score", JSON.stringify(score));
+        highScore();
+        });
+
+        function highScore() {
+            var initials = JSON.parse(localStorage.getItem("score"));
+            if (initials !== null) {
+                for (let i = 0; i < score.length; i++) {
+                    scoreEl.append([i]).sort();
+                    
+                }
+                highScoreEl.classList.toggle('hidden');
+                
+                
+            }
+          }
+
 }
 
 function loseGame() {
+
+    quizEl.classList.toggle('hidden');
+    endGameEl.classList.toggle('hidden');
+
+    resultEl.textContent = "you lose";
+    
 
 }
