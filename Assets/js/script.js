@@ -258,7 +258,6 @@ function winGame() {
                 }
                 highScoreEl.classList.toggle('hidden');
                 
-                
             }
           }
 
@@ -270,6 +269,9 @@ function loseGame() {
     endGameEl.classList.toggle('hidden');
 
     resultEl.textContent = "you lose";
+    finalScoreEL.textContent = timer;
+
+    endButtonEl.classList.addClass('hidden');
     
 
 }
