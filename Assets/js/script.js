@@ -27,6 +27,8 @@ var question = 0;
 
 var timer;
 
+var scores;
+
 var myQuestions = [
     {
 		question: "JavaScript is a _______ oriented language.",
@@ -209,8 +211,9 @@ function renderQuestions() {
         // if correct go to the next question
         if (myQuestions[question].correctAnswer === userAnswer) {
                 question++;
-                renderQuestions();
                 userAnswer= '';
+                renderQuestions();
+
                 
         }
 
@@ -240,23 +243,37 @@ function winGame() {
         event.preventDefault();
         
         var score = {
-          score: timer,
-          initials: initialsEl.value,
+            initials: initialsEl.value,
+            score: timer,
           
         };
+        var savedScores = JSON.parse(localStorage.getItem("scores"));
+        if (savedScores) {
+            scores = savedScores;
+        }
+
+        else {
+            scores = [];
+        }
+
+        scores.push(score);
+
+        localStorage.setItem("scores", JSON.stringify(scores));
         
-        localStorage.setItem("score", JSON.stringify(score));
+        console.log(scores);
+
         highScore();
         });
 
         function highScore() {
             var initials = JSON.parse(localStorage.getItem("score"));
             if (initials !== null) {
-                for (let i = 0; i < score.length; i++) {
-                    scoreEl.append([i]).sort();
-                    
-                }
+                scoreEl.textContent = initialsEl.value + " " + timer;
+                
+
                 highScoreEl.classList.toggle('hidden');
+                quizEl.classList.add('hidden');
+                endGameEl.classList.add('hidden');
                 
             }
           }
@@ -268,10 +285,10 @@ function loseGame() {
     quizEl.classList.toggle('hidden');
     endGameEl.classList.toggle('hidden');
 
-    resultEl.textContent = "you lose";
-    finalScoreEL.textContent = timer;
+    endButtonEl.classList.add('hidden');
+    initialsEl.classList.add('hidden');
 
-    endButtonEl.classList.addClass('hidden');
-    
+    resultEl.textContent = "you lose";
+    finalScoreEL.textContent = timer;    
 
 }
