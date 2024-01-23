@@ -158,8 +158,8 @@ function startGame() {
 	timer = 120;
 	setTime();
     renderQuestions();
-    startGameEl.classList.toggle('hidden');
-    quizEl.classList.toggle('hidden');
+    startGameEl.classList.add('hidden');
+    quizEl.classList.remove('hidden');
 }
 
 // Attach an event listener to the start button to call the 'startGame' function on click
@@ -266,11 +266,15 @@ function winGame() {
         });
 
         function highScore() {
-            var initials = JSON.parse(localStorage.getItem("score"));
-            if (initials !== null) {
-                scoreEl.textContent = initialsEl.value + " " + timer;
-                
+            scores = JSON.parse(localStorage.getItem("scores"));
+            if (scores !== null) {
+                for (let i = 0; i < scores.length; i++) {
+                    scoreEl.textContent = scores[i];
+                    
+                }
 
+                
+            
                 highScoreEl.classList.toggle('hidden');
                 quizEl.classList.add('hidden');
                 endGameEl.classList.add('hidden');
