@@ -5,3 +5,16 @@ body {
 .hidden {
     display: none
 }
+
+.flex-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.time {
+    text-align: left;
+}
+
+.topScore {
+    text-align: right;
+}

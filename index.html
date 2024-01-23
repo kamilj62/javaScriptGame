@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./assets/css/jass.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-    <title>javascript Game</title>
+    <title>Javascript Game</title>
   </head>
   <body>
-    <div class="time"><h1>120</h1></div>
+    <div class="flex-container">
+      <h1 class="time">120</h1>
+      <h1 class="topScore">High Score</h1>
+    </div>
+
     <div class="startScreen">
-      <h1>Welcome to javascript Game</h1>
+      <h1>Welcome to The Javascript Game</h1>
       <button id="startButton">start</button>
     </div>
     <div class="game hidden">
@@ -26,7 +30,7 @@
         <input type="radio" id="answer4" value="d" name="questions" />
         <label for="answer4" id="answer4-label">d</label><br />
 
-        <input type="submit" id="submit" value="Submit" />
+        <input type="button" id="submit" value="Submit" />
       </form>
     </div>
 

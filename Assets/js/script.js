@@ -23,11 +23,15 @@ var highScoreEl = document.querySelector('.highScore');
 
 var scoreEl = document.querySelector('#score');
 
+var topScoreEl = document.querySelector('.topScore');
+
 var question = 0;
 
 var timer;
 
 var scores;
+
+var showTopScore;
 
 var myQuestions = [
     {
@@ -153,6 +157,8 @@ var myQuestions = [
 
 ];
 
+
+
 // The startGame function is called when the sumbit button is clicked
 function startGame() {
 	timer = 120;
@@ -160,7 +166,7 @@ function startGame() {
     renderQuestions();
     startGameEl.classList.add('hidden');
     quizEl.classList.remove('hidden');
-}
+};
 
 // Attach an event listener to the start button to call the 'startGame' function on click
 startButtonEl.addEventListener('click', startGame);
@@ -183,7 +189,7 @@ function setTime() {
       }
   
     }, 1000);
-  }
+  };
 
 
 
@@ -206,26 +212,24 @@ function renderQuestions() {
         // last question stop
         if (question > 9) {
             return;
-        }
+        };
 
         // if correct go to the next question
         if (myQuestions[question].correctAnswer === userAnswer) {
                 question++;
                 userAnswer= '';
                 renderQuestions();
+                return;    
+        };
 
-                
-        }
-
-        // minus 10 seconds to the timer if question is wrong
-        // else if (myQuestions[question].correctAnswer !== userAnswer) {
+        //minus 10 seconds to the timer if question is wrong
+        // if (myQuestions[question].correctAnswer !== userAnswer) {
+        //     userAnswer.innerHTMLs = '';
         //     timer = timer - 10;
-        //     userAnswer = '';
         //     console.log(timer);
 
-        // }
-                
-    })
+        // };
+    });   
 }
 
 function winGame() {
@@ -239,8 +243,8 @@ function winGame() {
 
     
 
-    endButtonEl.addEventListener("click", function(event) {
-        event.preventDefault();
+    endButtonEl.addEventListener("click", function(e) {
+        e.preventDefault();
         
         var score = {
             initials: initialsEl.value,
@@ -266,23 +270,35 @@ function winGame() {
         });
 
         function highScore() {
-            scores = JSON.parse(localStorage.getItem("scores"));
+            
+            var scores = JSON.parse(localStorage.getItem("scores"));
+            
             if (scores !== null) {
+                // Clear previous high scores
+                scoreEl.innerHTML = "";
+                
+                // Iterate through all scores and append them to the scoreEl element
                 for (let i = 0; i < scores.length; i++) {
-                    scoreEl.textContent = scores[i];
+                    
+                    var scoreItem = document.createElement("div");
+                    scoreItem.textContent = scores[i].initials + ": " + scores[i].score;
+                    showTopScore = scoreEl.appendChild(scoreItem);
                     
                 }
-
-                
-            
-                highScoreEl.classList.toggle('hidden');
+        
+                // Display high score section
+                highScoreEl.classList.remove('hidden');
                 quizEl.classList.add('hidden');
                 endGameEl.classList.add('hidden');
-                
             }
-          }
-
+        }
+        topScoreEl.addEventListener('click', function(e){
+            e.preventDefault();
+            highScore();
+        });
 }
+
+
 
 function loseGame() {
 
@@ -296,3 +312,4 @@ function loseGame() {
     finalScoreEL.textContent = timer;    
 
 }
+
