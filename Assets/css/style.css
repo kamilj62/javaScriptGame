@@ -18,3 +18,7 @@ body {
 .topScore {
     text-align: right;
 }
+
+#finalScore {
+    background-color: yellow;
+}

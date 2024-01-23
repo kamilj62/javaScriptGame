@@ -114,7 +114,7 @@ var myQuestions = [
 		answers: {
 			a: 'Variables',
 			b: 'Function',
-			c: 'Objeft',
+			c: 'Object',
             d: 'All of the above'
 		},
 		correctAnswer: 'd'
@@ -155,7 +155,24 @@ var myQuestions = [
 
 ];
 
+topScoreEl.addEventListener('click', function(){
+    window.localStorage;
+    var scores = JSON.parse(localStorage.getItem("scores"));
+    scores = scores.sort((a,b)=>b.score-a.score);
 
+    for (let i = 0; i < scores.length; i++) {      
+        var scoreItem = document.createElement("div");
+        scoreItem.textContent = scores[i].initials + ": " + scores[i].score;
+        scoreEl.appendChild(scoreItem)
+    }
+
+    // Display high score section
+    highScoreEl.classList.remove('hidden');
+    quizEl.classList.add('hidden');
+    endGameEl.classList.add('hidden');
+    startButtonEl.classList.add('hidden');
+
+})
 
 // The startGame function is called when the sumbit button is clicked
 function startGame() {
@@ -221,11 +238,11 @@ function renderQuestions() {
         };
         
          //minus 10 seconds to the timer if question is wrong
-        // if (myQuestions[question].correctAnswer !== userAnswer) {
-        //     userAnswer = '';
-        //     timer = timer - 10;
-        //     console.log(timer);
-        // }
+        if (myQuestions[question].correctAnswer !== userAnswer) {
+            userAnswer = '';
+            timer = timer - 10;
+            console.log(timer);
+        }
     });   
 }
 
@@ -237,6 +254,8 @@ function winGame() {
     resultEl.textContent = "you win";
 
     finalScoreEL.textContent = timer;
+
+    console.log('timer', timer);
 
     endButtonEl.addEventListener("click", function(e) {
         e.preventDefault();
@@ -258,9 +277,7 @@ function winGame() {
         scores.push(score);
 
         localStorage.setItem("scores", JSON.stringify(scores));
-        
-        console.log(scores);
-
+    
         highScore();
         });
 
@@ -269,7 +286,7 @@ function winGame() {
             var scores = JSON.parse(localStorage.getItem("scores"));
 
             //sort scores
-            scores = scores.sort((a,b)=>b.score-a.score)
+            scores = scores.sort((a,b)=>b.score-a.score);
             console.log(scores);
             
             if (scores !== null) {
@@ -290,7 +307,6 @@ function winGame() {
                 endGameEl.classList.add('hidden');
             }
         }
-        topScoreEl.addEventListener('click', highScore);
 }
 
 function loseGame() {
@@ -302,6 +318,5 @@ function loseGame() {
     initialsEl.classList.add('hidden');
 
     resultEl.textContent = "you lose";
-    finalScoreEL.textContent = timer;    
-
+    finalScoreEL.textContent = timer;     
 }
