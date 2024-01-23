@@ -31,8 +31,6 @@ var timer;
 
 var scores;
 
-var showTopScore;
-
 var myQuestions = [
     {
 		question: "JavaScript is a _______ oriented language.",
@@ -221,14 +219,13 @@ function renderQuestions() {
                 renderQuestions();
                 return;    
         };
-
-        //minus 10 seconds to the timer if question is wrong
+        
+         //minus 10 seconds to the timer if question is wrong
         // if (myQuestions[question].correctAnswer !== userAnswer) {
-        //     userAnswer.innerHTMLs = '';
+        //     userAnswer = '';
         //     timer = timer - 10;
         //     console.log(timer);
-
-        // };
+        // }
     });   
 }
 
@@ -240,8 +237,6 @@ function winGame() {
     resultEl.textContent = "you win";
 
     finalScoreEL.textContent = timer;
-
-    
 
     endButtonEl.addEventListener("click", function(e) {
         e.preventDefault();
@@ -259,7 +254,7 @@ function winGame() {
         else {
             scores = [];
         }
-
+        // create an array of objects
         scores.push(score);
 
         localStorage.setItem("scores", JSON.stringify(scores));
@@ -272,6 +267,10 @@ function winGame() {
         function highScore() {
             
             var scores = JSON.parse(localStorage.getItem("scores"));
+
+            //sort scores
+            scores = scores.sort((a,b)=>b.score-a.score)
+            console.log(scores);
             
             if (scores !== null) {
                 // Clear previous high scores
@@ -282,8 +281,7 @@ function winGame() {
                     
                     var scoreItem = document.createElement("div");
                     scoreItem.textContent = scores[i].initials + ": " + scores[i].score;
-                    showTopScore = scoreEl.appendChild(scoreItem);
-                    
+                    scoreEl.appendChild(scoreItem)
                 }
         
                 // Display high score section
@@ -292,13 +290,8 @@ function winGame() {
                 endGameEl.classList.add('hidden');
             }
         }
-        topScoreEl.addEventListener('click', function(e){
-            e.preventDefault();
-            highScore();
-        });
+        topScoreEl.addEventListener('click', highScore);
 }
-
-
 
 function loseGame() {
 
@@ -312,4 +305,3 @@ function loseGame() {
     finalScoreEL.textContent = timer;    
 
 }
-
