@@ -10,7 +10,7 @@ N/A
 
 ## Usage
 
-![final JavaScipt Game](./assets/JavaScriptGame.png);
+![final JavaScipt Game](./JavaScriptGame.png);
 
 https://kamilj62.github.io/javaScriptGame/
 
