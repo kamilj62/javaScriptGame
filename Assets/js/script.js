@@ -217,34 +217,37 @@ function renderQuestions() {
     answer3El.textContent = myQuestions[question].answers.c;
     answer4El.textContent = myQuestions[question].answers.d;
 
+   
+}
     // added event listener with prevent Default that cycles through questions when the right answer is clicked
-    submitEl.addEventListener('click', function(e){
+     submitEl.addEventListener('click', function(e){
         e.preventDefault();
         // check to see if checked is the same as the right answer
         var userAnswer = document.querySelector("input[name=questions]:checked").value;
-        console.log(userAnswer);
+        
         
         // last question stop
         if (question > 9) {
             return;
         };
-
+    
         // if correct go to the next question
         if (myQuestions[question].correctAnswer === userAnswer) {
-                question++;
-                userAnswer= '';
-                renderQuestions();
-                return;    
-        };
+            
+            console.log('userAnswer', userAnswer);
+            console.log('question', question);
+            console.log('correct answer', myQuestions[question].correctAnswer);
+            question++;
+            renderQuestions();
+                   
+        } else {
         
          //minus 10 seconds to the timer if question is wrong
-        if (myQuestions[question].correctAnswer !== userAnswer) {
-            userAnswer = '';
+        // if (myQuestions[question].correctAnswer !== userAnswer) {
             timer = timer - 10;
             console.log(timer);
-        }
-    });   
-}
+        };
+    });
 
 function winGame() {
 
@@ -254,8 +257,6 @@ function winGame() {
     resultEl.textContent = "you win";
 
     finalScoreEL.textContent = timer;
-
-    console.log('timer', timer);
 
     endButtonEl.addEventListener("click", function(e) {
         e.preventDefault();
